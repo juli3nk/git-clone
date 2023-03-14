@@ -1,4 +1,4 @@
-FROM golang:1.14-alpine3.12 AS builder
+FROM golang:alpine AS builder
 
 RUN apk --update add \
 		ca-certificates \
@@ -13,6 +13,7 @@ WORKDIR /go/src/github.com/juli3nk/git-clone
 
 COPY . .
 
+ENV GO111MODULE=off
 RUN go get
 RUN go build -ldflags "-linkmode external -extldflags -static -s -w" -o /tmp/git-clone
 
